@@ -3,35 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    
-    <!-- SEO Meta Tags (Brand Optimized) -->
-    <title>Ank Bazar - Official Portal | Live Results & Daily Updates</title>
-    <meta name="description" content="Check live daily Ank Bazar results, historical charts, fast updates, and online reports on the official Ank Bazar portal." />
-    <meta name="keywords" content="Ank Bazar, Ank Bazar Live, Ank Bazar official, Ank Bazar results, Ank Bazar today" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://ankbazar-live-c7hv.vercel.app/" />
-    <meta name="application-name" content="Ank Bazar">
-    <meta name="apple-mobile-web-app-title" content="Ank Bazar">
-
-    <!-- Social Media Preview Tags (Open Graph) -->
-    <meta property="og:title" content="Ank Bazar - Official Live Results & Charts" />
-    <meta property="og:description" content="Check live daily Ank Bazar results and charts instantly on the official site." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ankbazar-live-c7hv.vercel.app/" />
-    <meta property="og:site_name" content="Ank Bazar" />
-
-    <!-- Google Brand Structured Data (Crucial for #1 Name Ranking) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Ank Bazar",
-      "alternateName": "AnkBazar",
-      "url": "https://ankbazar-live-c7hv.vercel.app/",
-      "description": "Official portal for live Ank Bazar results and historical chart data."
-    }
-    </script>
-
+    <title>Ank Bazar - Daily Number Updates & Information Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -48,11 +20,9 @@
     <!-- TopNavBar -->
     <nav class="navbar">
         <div class="container nav-content flex justify-between items-center w-full">
-            <!-- Logo & Tagline (H1 Optimized for SEO) -->
+            <!-- Logo & Tagline -->
             <div class="flex-col">
-                <h1 style="margin: 0; padding: 0; line-height: 1;">
-                    <a class="nav-logo-text font-display-lg" href="/" title="Ank Bazar Official Home" style="text-decoration: none;">Ank Bazar</a>
-                </h1>
+                <a class="nav-logo-text font-display-lg" href="#">Ank Bazar</a>
                 <span class="nav-tagline font-label-caps hidden md:block mt-1">Daily Number Updates & Information Portal</span>
             </div>
 
@@ -100,10 +70,10 @@
 
     <!-- Main Content -->
     <main class="main-content container">
-        <!-- Hero Section (Bento Grid Style) -->
+        <!-- Hero Section (Bento Grid) -->
         <section class="grid-bento">
-            <!-- Big Today Result Card -->
-            <div class="grid-col-8 card card-shadow flex-col justify-between animate-on-load">
+            <!-- Left Big Card: Today Number Update -->
+            <div class="grid-col-8 card card-shadow flex-col justify-between">
                 <div class="flex justify-between items-start mb-6">
                     <div>
                         <h2 class="font-headline-md card-title">Today Number Update</h2>
@@ -114,24 +84,26 @@
                     </span>
                 </div>
 
-                <div class="grid-2-layout mt-auto">
-                    <div class="result-block">
-                        <div class="result-label font-label-caps">Previous Day Lucky Number</div>
-                        <div id="ui-prev-num" class="result-value font-data-cell">***-**</div>
-                        <div id="ui-prev-meta" class="result-meta">Loading...</div>
+                <div class="grid-2-layout mt-auto gap-4">
+                    <!-- Box 1: Previous Day -->
+                    <div class="result-block card-inner p-4 text-center">
+                        <div class="result-label font-label-caps text-xs td-muted mb-2">PREVIOUS DAY LUCKY NUMBER</div>
+                        <div id="ui-prev-num" class="result-value font-display-lg font-bold my-1">112-45</div>
+                        <div id="ui-prev-meta" class="result-meta text-xs td-muted">Yesterday Result</div>
                     </div>
-                    <div class="result-block active">
-                        <div class="result-label font-label-caps">Today's Lucky Number</div>
-                        <div id="ui-today-num" class="result-value font-data-cell result-value-primary">***-**</div>
-                        <div id="ui-today-meta" class="result-meta">Loading...</div>
+
+                    <!-- Box 2: Today's Lucky Number (Gold Box) -->
+                    <div class="result-block active card-inner p-4 text-center highlight-gold-box">
+                        <div class="result-label font-label-caps text-xs td-muted mb-2">TODAY'S LUCKY NUMBER</div>
+                        <div id="ui-today-num" class="result-value font-display-lg font-bold my-1 text-primary-bold">892</div>
+                        <div id="ui-today-meta" class="result-meta text-xs td-muted">Updated: 10:00 PM</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Side Widgets -->
+            <!-- Right Side Widget: Yesterday Summary -->
             <div class="grid-col-4 flex-col gap-gutter">
-                <!-- Yesterday Summary -->
-                <div class="card-secondary animate-on-load">
+                <div class="card-secondary">
                     <h3 class="font-table-header card-header-bordered">
                         Yesterday Result
                         <span class="material-symbols-outlined icon">history</span>
@@ -139,26 +111,27 @@
                     <ul class="history-list">
                         <li class="history-item">
                             <span class="history-item-label">Morning</span>
-                            <span id="ui-yesterday-morning" class="history-item-value font-data-cell">---</span>
+                            <span id="ui-yesterday-morning" class="history-item-value font-data-cell">-</span>
                         </li>
                         <li class="history-item">
                             <span class="history-item-label">Day</span>
-                            <span id="ui-yesterday-day" class="history-item-value font-data-cell">---</span>
+                            <span id="ui-yesterday-day" class="history-item-value font-data-cell">-</span>
                         </li>
                         <li class="history-item">
                             <span class="history-item-label">Evening</span>
-                            <span id="ui-yesterday-evening" class="history-item-value font-data-cell">---</span>
+                            <span id="ui-yesterday-evening" class="history-item-value font-data-cell">123-00</span>
                         </li>
                         <li class="history-item">
                             <span class="history-item-label">Night</span>
-                            <span id="ui-yesterday-night" class="history-item-value font-data-cell">---</span>
+                            <span id="ui-yesterday-night" class="history-item-value font-data-cell">-</span>
                         </li>
                     </ul>
+                </div>
             </div>
         </section>
 
         <!-- Today Result Section (Detailed Table) -->
-        <section class="scroll-mt-32 animate-on-load" id="today-result">
+        <section class="scroll-mt-32 scroll-pop" id="today-result">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="font-headline-md card-title">Live Market Board</h2>
                 <span class="badge badge-live animate-pulse font-label-caps">
@@ -170,11 +143,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="font-table-header">Market Name</th>
-                            <th class="font-table-header">Open Time</th>
-                            <th class="font-table-header">Close Time</th>
-                            <th class="font-table-header td-right">Result</th>
-                            <th class="font-table-header td-center">Status</th>
+                            <th class="font-table-header" style="width: 25%;">Market Name</th>
+                            <th class="font-table-header" style="width: 15%;">Open Time</th>
+                            <th class="font-table-header" style="width: 15%;">Close Time</th>
+                            <th class="font-table-header td-center" style="width: 15%;">Result</th>
+                            <th class="font-table-header td-center" style="width: 15%;">Status</th>
+                            <th class="font-table-header td-center" style="width: 15%;">To Get</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,9 +159,16 @@
                             </td>
                             <td id="ui-market-open" class="td-variant">09:00 AM</td>
                             <td id="ui-market-close" class="td-variant">07:00 PM</td>
-                            <td id="market-result" class="td-right font-data-cell text-primary-bold">***-**</td>
+                            <td id="market-result" class="td-center font-data-cell text-primary-bold">***-**</td>
                             <td class="td-center">
                                 <span id="market-status" class="badge font-label-caps text-xs">---</span>
+                            </td>
+                            <td class="td-center">
+                                <a href="https://wa.me/" target="_blank" title="Contact on WhatsApp" style="display: inline-flex; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#25D366">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                    </svg>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
@@ -198,7 +179,7 @@
         <!-- Old Results & Charts (Asymmetric Layout) -->
         <section class="grid-2-layout">
             <!-- Old Results -->
-            <div class="card scroll-mt-32 flex-col animate-on-load" id="old-results">
+            <div class="card scroll-mt-32 flex-col scroll-pop" id="old-results">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="font-headline-md card-title">Historical Results</h2>
                 </div>
@@ -209,10 +190,10 @@
                         <span class="material-symbols-outlined icon">calendar_month</span>
                         <input id="history-date-filter" class="input-field" type="date"/>
                     </div>
-                    <button id="btn-history-search" class="btn-icon" aria-label="Search">
+                    <button id="btn-history-search" class="btn-icon">
                         <span class="material-symbols-outlined">search</span>
                     </button>
-                    <button id="btn-history-clear" class="btn-icon hidden" aria-label="Clear Search">
+                    <button id="btn-history-clear" class="btn-icon hidden">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -238,7 +219,7 @@
             </div>
 
             <!-- Analysis Section (Tabs) -->
-            <div class="card scroll-mt-32 flex-col animate-on-load" id="analysis">
+            <div class="card scroll-mt-32 flex-col scroll-pop" id="analysis">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="font-headline-md card-title">Market Analysis</h2>
                 </div>
@@ -286,7 +267,7 @@
                 <div id="tab-hot" class="tab-content hidden">
                     <div class="flex justify-between items-center mb-4">
                         <span class="font-medium text-sm">Top Repeated Results</span>
-                        <select id="hot-numbers-range" class="input-field" style="width: auto; padding: 4px 8px; font-size: 12px; height: 32px;" aria-label="Date Range">
+                        <select id="hot-numbers-range" class="input-field" style="width: auto; padding: 4px 8px; font-size: 12px; height: 32px;">
                             <option value="7">Last 7 Days</option>
                             <option value="30">Last 30 Days</option>
                             <option value="all">All Time</option>
@@ -502,11 +483,10 @@
             </div>
         </div>
     </footer>
-    
     <!-- Authentication Modal -->
     <div id="auth-modal" class="modal-overlay hidden">
         <div class="modal-container">
-            <button id="modal-close" class="modal-close-btn" aria-label="Close">
+            <button id="modal-close" class="modal-close-btn">
                 <span class="material-symbols-outlined">close</span>
             </button>
             
@@ -534,11 +514,11 @@
                 <form class="auth-form" id="admin-form">
                     <div id="admin-error" class="error-message hidden mb-4"></div>
                     <div class="input-group mb-4">
-                        <label class="font-label-caps" for="admin-email">Email Address</label>
+                        <label class="font-label-caps">Email Address</label>
                         <input type="email" id="admin-email" class="input-field" placeholder="admin@ankbazar.in" required>
                     </div>
                     <div class="input-group mb-4">
-                        <label class="font-label-caps" for="admin-password">Password</label>
+                        <label class="font-label-caps">Password</label>
                         <input type="password" id="admin-password" class="input-field" placeholder="••••••••" required>
                     </div>
                     <button type="submit" class="btn-primary w-full mt-4" id="btn-admin-submit">
@@ -576,7 +556,7 @@
                     <!-- Consumer Email Step -->
                     <div id="consumer-email-step">
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="consumer-email">Email Address</label>
+                            <label class="font-label-caps">Email Address</label>
                             <input type="email" id="consumer-email" class="input-field" placeholder="you@example.com" required>
                         </div>
                         <button id="btn-consumer-next" class="btn-primary w-full mt-4">Next</button>
@@ -589,7 +569,7 @@
                             <button id="btn-edit-email" class="btn-text font-label-caps">Edit</button>
                         </div>
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="consumer-password">Password</label>
+                            <label class="font-label-caps">Password</label>
                             <input type="password" id="consumer-password" class="input-field" placeholder="••••••••" required>
                         </div>
                         <button id="btn-consumer-submit" class="btn-primary w-full mt-4">
@@ -605,7 +585,7 @@
     <!-- Admin Dashboard Modal -->
     <div id="admin-panel-modal" class="modal-overlay hidden">
         <div class="modal-container" style="max-height: 90vh; overflow-y: auto; max-width: 520px;">
-            <button id="admin-modal-close" class="modal-close-btn" aria-label="Close">
+            <button id="admin-modal-close" class="modal-close-btn">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="modal-step">
@@ -624,20 +604,20 @@
                             <div class="accordion-inner-content">
                         <form id="admin-cms-form" class="auth-form">
                             <div class="input-group mb-4">
-                                <label class="font-label-caps" for="admin-today-num">Today's Number</label>
+                                <label class="font-label-caps">Today's Number</label>
                                 <input type="text" id="admin-today-num" class="input-field" required>
                             </div>
                             <div class="input-group mb-4">
-                                <label class="font-label-caps" for="admin-today-meta">Today's Subtext</label>
+                                <label class="font-label-caps">Today's Subtext</label>
                                 <input type="text" id="admin-today-meta" class="input-field" required>
                             </div>
                             <div class="divider my-1"></div>
                             <div class="input-group mb-4">
-                                <label class="font-label-caps" for="admin-prev-num">Previous Day Number</label>
+                                <label class="font-label-caps">Previous Day Number</label>
                                 <input type="text" id="admin-prev-num" class="input-field" required>
                             </div>
                             <div class="input-group mb-4">
-                                <label class="font-label-caps" for="admin-prev-meta">Previous Day Subtext</label>
+                                <label class="font-label-caps">Previous Day Subtext</label>
                                 <input type="text" id="admin-prev-meta" class="input-field" required>
                             </div>
                             <button type="submit" class="btn-primary w-full mt-4" id="btn-admin-save">
@@ -660,19 +640,19 @@
                         <div class="accordion-inner">
                             <div class="accordion-inner-content">
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-yesterday-morning">Morning Result</label>
+                            <label class="font-label-caps">Morning Result</label>
                             <input type="text" id="admin-yesterday-morning" class="input-field" placeholder="e.g. 789-24">
                         </div>
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-yesterday-day">Day Result</label>
+                            <label class="font-label-caps">Day Result</label>
                             <input type="text" id="admin-yesterday-day" class="input-field" placeholder="e.g. 456-11">
                         </div>
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-yesterday-evening">Evening Result</label>
+                            <label class="font-label-caps">Evening Result</label>
                             <input type="text" id="admin-yesterday-evening" class="input-field" placeholder="e.g. 123-00">
                         </div>
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-yesterday-night">Night Result</label>
+                            <label class="font-label-caps">Night Result</label>
                             <input type="text" id="admin-yesterday-night" class="input-field" placeholder="e.g. 999-88">
                         </div>
                         <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-yesterday">
@@ -694,15 +674,15 @@
                         <div class="accordion-inner">
                             <div class="accordion-inner-content">
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-market-name">Market Name</label>
+                            <label class="font-label-caps">Market Name</label>
                             <input type="text" id="admin-market-name" class="input-field" placeholder="Ank Bazar">
                         </div>
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-market-open">Open Time</label>
+                            <label class="font-label-caps">Open Time</label>
                             <input type="text" id="admin-market-open" class="input-field" placeholder="09:00 AM">
                         </div>
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-market-close">Close Time</label>
+                            <label class="font-label-caps">Close Time</label>
                             <input type="text" id="admin-market-close" class="input-field" placeholder="07:00 PM">
                         </div>
                         <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-market">
@@ -728,11 +708,11 @@
                         <div id="admin-history-success" class="success-message hidden mb-4" style="background-color: rgba(16, 185, 129, 0.1); color: var(--color-status-positive); padding: 12px; border-radius: var(--radius-default); font-size: 14px; font-weight: 500; text-align: center;">History record saved!</div>
                         <form id="admin-history-form" class="auth-form">
                             <div class="input-group mb-4">
-                                <label class="font-label-caps" for="admin-history-date">Result Date</label>
+                                <label class="font-label-caps">Result Date</label>
                                 <input type="date" id="admin-history-date" class="input-field" required>
                             </div>
                             <div class="input-group mb-4">
-                                <label class="font-label-caps" for="admin-history-number">Lucky Number</label>
+                                <label class="font-label-caps">Lucky Number</label>
                                 <input type="text" id="admin-history-number" class="input-field" placeholder="e.g. 348-59" required>
                             </div>
                             <button type="submit" class="btn-primary w-full mt-4" id="btn-admin-history-save">
@@ -748,10 +728,10 @@
                                 <span class="material-symbols-outlined icon">calendar_month</span>
                                 <input id="admin-manage-date-filter" class="input-field" type="date"/>
                             </div>
-                            <button id="btn-admin-manage-search" class="btn-icon" aria-label="Search">
+                            <button id="btn-admin-manage-search" class="btn-icon">
                                 <span class="material-symbols-outlined">search</span>
                             </button>
-                            <button id="btn-admin-manage-clear" class="btn-icon hidden" aria-label="Clear">
+                            <button id="btn-admin-manage-clear" class="btn-icon hidden">
                                 <span class="material-symbols-outlined">close</span>
                             </button>
                         </div>
@@ -789,13 +769,13 @@
                         <div class="accordion-inner">
                             <div class="accordion-inner-content">
                         <p class="td-muted text-xs mb-4">Leave blank to auto-fetch from history.</p>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-mon">Monday</label><input type="text" id="admin-wg-mon" class="input-field" placeholder="e.g. 123-45"></div>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-tue">Tuesday</label><input type="text" id="admin-wg-tue" class="input-field" placeholder="e.g. 123-45"></div>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-wed">Wednesday</label><input type="text" id="admin-wg-wed" class="input-field" placeholder="e.g. 123-45"></div>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-thu">Thursday</label><input type="text" id="admin-wg-thu" class="input-field" placeholder="e.g. 123-45"></div>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-fri">Friday</label><input type="text" id="admin-wg-fri" class="input-field" placeholder="e.g. 123-45"></div>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-sat">Saturday</label><input type="text" id="admin-wg-sat" class="input-field" placeholder="e.g. 123-45"></div>
-                        <div class="input-group mb-4"><label class="font-label-caps" for="admin-wg-sun">Sunday</label><input type="text" id="admin-wg-sun" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Monday</label><input type="text" id="admin-wg-mon" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Tuesday</label><input type="text" id="admin-wg-tue" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Wednesday</label><input type="text" id="admin-wg-wed" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Thursday</label><input type="text" id="admin-wg-thu" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Friday</label><input type="text" id="admin-wg-fri" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Saturday</label><input type="text" id="admin-wg-sat" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Sunday</label><input type="text" id="admin-wg-sun" class="input-field" placeholder="e.g. 123-45"></div>
                         <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-weekly">
                             <span class="btn-text">Save Weekly Grid</span>
                             <span class="spinner hidden"></span>
@@ -815,7 +795,7 @@
                         <div class="accordion-inner">
                             <div class="accordion-inner-content">
                         <div class="input-group mb-4">
-                            <label class="font-label-caps" for="admin-hot-range">Default Calculation Range</label>
+                            <label class="font-label-caps">Default Calculation Range</label>
                             <select id="admin-hot-range" class="input-field">
                                 <option value="7">Last 7 Days</option>
                                 <option value="30">Last 30 Days</option>
@@ -824,7 +804,7 @@
                             </select>
                         </div>
                         <div class="flex items-center justify-between mb-4">
-                            <label class="font-label-caps" for="admin-hot-auto">Enable Auto-Calculation</label>
+                            <label class="font-label-caps">Enable Auto-Calculation</label>
                             <label class="switch">
                                 <input type="checkbox" id="admin-hot-auto">
                                 <span class="slider round"></span>

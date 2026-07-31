@@ -1349,4 +1349,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Scroll Pop Animation Observer
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: unobserve if you only want it to pop once
+                scrollObserver.unobserve(entry.target); 
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('.scroll-pop').forEach(el => {
+        scrollObserver.observe(el);
+    });
 });
