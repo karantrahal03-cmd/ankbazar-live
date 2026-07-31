@@ -1579,3 +1579,27 @@ input:checked + .slider:before { transform: translateX(20px); }
   opacity: 1;
   transform: translateY(0) scale(1);
 }
+
+/* ===========================
+   MOBILE DROPDOWN & BUTTON FIXES
+   =========================== */
+@media (max-width: 767px) {
+  .dropdown-content, .nav-links[style*="display: flex"] {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .nav-links[style*="display: flex"] {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+  }
+}
+
+.btn-primary .btn-text, .btn-primary {
+  color: #111111 !important;
+}
