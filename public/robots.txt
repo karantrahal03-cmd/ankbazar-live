@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ankbazar-live-c7hv.vercel.app/sitemap.xml
