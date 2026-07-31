@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Ank Bazar - Daily Number Updates & Information Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Notice Banner -->
+    <div class="notice-banner font-label-caps">
+        THIS WEBSITE IS FOR INFORMATION AND ENTERTAINMENT PURPOSES ONLY. WE DO NOT CONDUCT BETTING OR GAMBLING.
+    </div>
+
+    <!-- TopNavBar -->
+    <nav class="navbar">
+        <div class="container nav-content flex justify-between items-center w-full">
+            <!-- Logo & Tagline -->
+            <div class="flex-col">
+                <a class="nav-logo-text font-display-lg" href="#">Ank Bazar</a>
+                <span class="nav-tagline font-label-caps hidden md:block mt-1">Daily Number Updates & Information Portal</span>
+            </div>
+
+            <!-- Navigation Links (Desktop) -->
+            <div class="nav-links items-center">
+                <a class="nav-link active font-label-caps" href="#">Home</a>
+                <a class="nav-link font-label-caps" href="#today-result">Today Result</a>
+                <a class="nav-link font-label-caps" href="#old-results">Old Results</a>
+                <a class="nav-link font-label-caps" href="#charts">Charts</a>
+                <a class="nav-link font-label-caps" href="#contact">Contact</a>
+            </div>
+
+            <!-- Trailing Action -->
+            <div class="flex items-center gap-4 relative">
+                <button id="btn-nav-signin" class="btn-signin font-label-caps">
+                    <span class="material-symbols-outlined icon-filled">login</span>
+                    Sign In
+                </button>
+
+                <!-- Profile Dropdown (Hidden initially) -->
+                <div id="nav-profile-menu" class="profile-menu hidden">
+                    <button id="btn-profile-toggle" class="profile-avatar">
+                        <img id="profile-img" src="" alt="Profile" class="hidden">
+                        <span id="profile-initial" class="initial font-headline-md">U</span>
+                    </button>
+                    <div id="profile-dropdown" class="dropdown-content hidden">
+                        <div class="dropdown-header flex-col gap-1">
+                            <span id="dropdown-name" class="font-medium text-sm">User</span>
+                            <span id="dropdown-email" class="td-variant text-xs">user@example.com</span>
+                            <span id="dropdown-role" class="badge badge-upcoming font-label-caps text-xs w-max mt-1">Role</span>
+                        </div>
+                        <div class="divider my-1"></div>
+                        <button id="btn-admin-panel" class="dropdown-item hidden"><span class="material-symbols-outlined icon">dashboard_customize</span> Admin Dashboard</button>
+                        <button id="btn-logout" class="dropdown-item text-error-bold"><span class="material-symbols-outlined icon">logout</span> Log Out</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="btn-mobile-menu" id="mobile-menu-btn">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content container">
+        <!-- Hero Section (Bento Grid Style) -->
+        <section class="grid-bento">
+            <!-- Big Today Result Card -->
+            <div class="grid-col-8 card card-shadow flex-col justify-between animate-on-load">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="font-headline-md card-title">Today Number Update</h2>
+                        <p class="card-subtitle mt-1">Live market data for the current session.</p>
+                    </div>
+                    <span class="badge badge-live animate-pulse font-label-caps">
+                        <span class="material-symbols-outlined icon-filled icon">fiber_manual_record</span> LIVE
+                    </span>
+                </div>
+
+                <div class="grid-2-layout mt-auto">
+                    <div class="result-block">
+                        <div class="result-label font-label-caps">Previous Day Lucky Number</div>
+                        <div id="ui-prev-num" class="result-value font-data-cell">***-**</div>
+                        <div id="ui-prev-meta" class="result-meta">Loading...</div>
+                    </div>
+                    <div class="result-block active">
+                        <div class="result-label font-label-caps">Today's Lucky Number</div>
+                        <div id="ui-today-num" class="result-value font-data-cell result-value-primary">***-**</div>
+                        <div id="ui-today-meta" class="result-meta">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Widgets -->
+            <div class="grid-col-4 flex-col gap-gutter">
+                <!-- Yesterday Summary -->
+                <div class="card-secondary animate-on-load">
+                    <h3 class="font-table-header card-header-bordered">
+                        Yesterday Result
+                        <span class="material-symbols-outlined icon">history</span>
+                    </h3>
+                    <ul class="history-list">
+                        <li class="history-item">
+                            <span class="history-item-label">Morning</span>
+                            <span id="ui-yesterday-morning" class="history-item-value font-data-cell">---</span>
+                        </li>
+                        <li class="history-item">
+                            <span class="history-item-label">Day</span>
+                            <span id="ui-yesterday-day" class="history-item-value font-data-cell">---</span>
+                        </li>
+                        <li class="history-item">
+                            <span class="history-item-label">Evening</span>
+                            <span id="ui-yesterday-evening" class="history-item-value font-data-cell">---</span>
+                        </li>
+                        <li class="history-item">
+                            <span class="history-item-label">Night</span>
+                            <span id="ui-yesterday-night" class="history-item-value font-data-cell">---</span>
+                        </li>
+                    </ul>
+            </div>
+        </section>
+
+        <!-- Today Result Section (Detailed Table) -->
+        <section class="scroll-mt-32 animate-on-load" id="today-result">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-headline-md card-title">Live Market Board</h2>
+                <span class="badge badge-live animate-pulse font-label-caps">
+                    <span class="status-dot"></span> AUTO-UPDATING
+                </span>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="font-table-header">Market Name</th>
+                            <th class="font-table-header">Open Time</th>
+                            <th class="font-table-header">Close Time</th>
+                            <th class="font-table-header td-right">Result</th>
+                            <th class="font-table-header td-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="market-row-ank" class="highlight-row">
+                            <td id="ui-market-name" class="font-medium flex items-center gap-2">
+                                Ank Bazar
+                                <span class="material-symbols-outlined icon-filled text-primary-bold" style="font-size: 16px;">star</span>
+                            </td>
+                            <td id="ui-market-open" class="td-variant">09:00 AM</td>
+                            <td id="ui-market-close" class="td-variant">07:00 PM</td>
+                            <td id="market-result" class="td-right font-data-cell text-primary-bold">***-**</td>
+                            <td class="td-center">
+                                <span id="market-status" class="badge font-label-caps text-xs">---</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Old Results & Charts (Asymmetric Layout) -->
+        <section class="grid-2-layout">
+            <!-- Old Results -->
+            <div class="card scroll-mt-32 flex-col animate-on-load" id="old-results">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-headline-md card-title">Historical Results</h2>
+                </div>
+                
+                <!-- Search/Filter -->
+                <div class="search-bar">
+                    <div class="input-wrapper">
+                        <span class="material-symbols-outlined icon">calendar_month</span>
+                        <input id="history-date-filter" class="input-field" type="date"/>
+                    </div>
+                    <button id="btn-history-search" class="btn-icon">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button id="btn-history-clear" class="btn-icon hidden">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="font-table-header">Date</th>
+                                <th class="font-table-header td-right">Lucky Number</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <tr>
+                                <td colspan="2" class="td-center td-muted" style="padding: 24px;">Loading historical data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button id="btn-load-more-history" class="btn-text-link hidden">
+                    Load More <span class="material-symbols-outlined icon">expand_more</span>
+                </button>
+            </div>
+
+            <!-- Analysis Section (Tabs) -->
+            <div class="card scroll-mt-32 flex-col animate-on-load" id="analysis">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-headline-md card-title">Market Analysis</h2>
+                </div>
+                
+                <div class="tabs mb-4">
+                    <button class="tab-btn font-table-header active" data-tab="tab-weekly">Weekly Grid</button>
+                    <button class="tab-btn font-table-header" data-tab="tab-hot">Hot Numbers</button>
+                </div>
+                
+                <!-- Tab 1: Weekly Grid -->
+                <div id="tab-weekly" class="tab-content active">
+                    <div class="weekly-grid">
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Mon</span>
+                            <span class="wg-val font-data-cell" id="wg-mon">---</span>
+                        </div>
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Tue</span>
+                            <span class="wg-val font-data-cell" id="wg-tue">---</span>
+                        </div>
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Wed</span>
+                            <span class="wg-val font-data-cell" id="wg-wed">---</span>
+                        </div>
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Thu</span>
+                            <span class="wg-val font-data-cell" id="wg-thu">---</span>
+                        </div>
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Fri</span>
+                            <span class="wg-val font-data-cell" id="wg-fri">---</span>
+                        </div>
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Sat</span>
+                            <span class="wg-val font-data-cell" id="wg-sat">---</span>
+                        </div>
+                        <div class="wg-day">
+                            <span class="wg-label font-label-caps">Sun</span>
+                            <span class="wg-val font-data-cell" id="wg-sun">---</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Hot Numbers Analysis -->
+                <div id="tab-hot" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="font-medium text-sm">Top Repeated Results</span>
+                        <select id="hot-numbers-range" class="input-field" style="width: auto; padding: 4px 8px; font-size: 12px; height: 32px;">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <div class="hot-numbers-list flex-col gap-2" id="hot-numbers-chart">
+                        <!-- Items injected via JS -->
+                        <div class="td-muted text-center py-4 w-full text-sm">Loading chart data...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information / About & Contact -->
+        <section class="contact-section scroll-mt-32 animate-on-load" id="contact" style="animation-delay: 0.5s;">
+            <div class="grid-2-layout">
+                <div>
+                    <h3 class="font-headline-md card-title mb-4">About Portal</h3>
+                    <p class="td-variant mt-2">
+                        Ank Bazar is an informational portal that publishes publicly available number results and chart data. Our mission is to provide accurate, timely, and well-structured historical and daily data for analytical purposes. We pride ourselves on the speed and reliability of our updates.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-headline-md card-title mb-4">Contact Information</h3>
+                    <div>
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined icon">mail</span>
+                            <div>
+                                <div class="font-label-caps td-muted mb-2">EMAIL US</div>
+                                <a class="contact-link" href="mailto:contact@ankbazar.in">contact@ankbazar.in</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined icon">alternate_email</span>
+                            <div>
+                                <div class="font-label-caps td-muted mb-2">FOLLOW US</div>
+                                <a class="contact-link" href="#">@ankbazar on Instagram</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Legal & Information Section -->
+        <section id="seo-legal-content" class="scroll-mt-32 card animate-on-load" style="margin-top: 64px; margin-bottom: 32px; padding: 48px 32px; animation-delay: 0.6s;">
+            <h2 class="font-headline-md text-primary-bold mb-6 text-center">Ank Bazar: Official Legal Information, Terms of Service, and Privacy Policy</h2>
+            <p class="td-variant text-center mb-8" style="max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                Welcome to Ank Bazar. We pride ourselves on providing the fastest, most accurate, and well-structured historical and daily number data for analytical purposes. To ensure a safe and transparent environment for all visitors, please review our Frequently Asked Questions, Legal Disclaimer, Terms of Service, and Privacy Policy below.
+            </p>
+
+            <!-- FAQ Section -->
+            <div id="faq" class="scroll-mt-32 mb-10">
+                <h2 class="font-headline-md mb-6 border-b pb-2" style="border-color: var(--color-outline-variant);">Section 1: Frequently Asked Questions (FAQs)</h2>
+                
+                <div class="mb-6">
+                    <h3 class="font-table-header mb-2 text-primary-bold">Q1: Is Ank Bazar a gambling or betting website?</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Answer: No. Ank Bazar is strictly an informational and educational portal. We do not conduct, host, or facilitate any form of betting or gambling. We do not accept money, wagers, or bets from our users. Our sole purpose is to publish publicly available number results and chart data.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="font-table-header mb-2 text-primary-bold">Q2: Are there any betting exchange games or cricket betting features here?</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Answer: No. Ank Bazar is not a betting exchange, nor do we offer betting exchange games or cricket betting. If you are looking for an online betting platform, you will not find those services here. We strictly provide historical numerical data and charts for personal analysis and entertainment.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="font-table-header mb-2 text-primary-bold">Q3: I see people asking, "Is betting legal in India?" or "Is online betting legal in India?" How does Ank Bazar fit into this?</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Answer: The question of "is betting legal in India" or "is online betting legal in India" depends entirely on state-specific laws, as some states permit skill-based games while others ban all forms of wagering. However, these laws do not apply to Ank Bazar because we are not a betting platform. We merely display numbers and data. Because no money is wagered on our platform, using Ank Bazar is completely safe and legal.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="font-table-header mb-2 text-primary-bold">Q4: Do you offer a betting exchange app?</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Answer: No, we do not operate a betting exchange app. While users frequently search for terms like "which betting app is legal in India," Ank Bazar is simply a data-tracking website. We do not require users to deposit funds, nor do we offer an application for placing stakes.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="font-table-header mb-2 text-primary-bold">Q5: What is back and lay in betting, and do you offer it?</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Answer: For those wondering "what is back and lay in betting," it is a concept used on trading exchanges where users either bet for an outcome (back) or against an outcome (lay). Ank Bazar does not offer back and lay features, odds, or any trading mechanics. We only display final historical numbers and daily updates.</p>
+                </div>
+            </div>
+
+            <!-- Disclaimer Section -->
+            <div id="disclaimer" class="scroll-mt-32 mb-10">
+                <h2 class="font-headline-md mb-6 border-b pb-2" style="border-color: var(--color-outline-variant);">Section 2: Legal Disclaimer</h2>
+                
+                <div class="notice-banner font-label-caps mb-6" style="border-radius: var(--radius-md); position: static;">
+                    THIS WEBSITE IS FOR INFORMATION AND ENTERTAINMENT PURPOSES ONLY. WE DO NOT CONDUCT BETTING OR GAMBLING.
+                </div>
+
+                <p class="td-variant mb-6" style="line-height: 1.6;">
+                    The information provided on Ank Bazar is strictly for educational, analytical, and entertainment purposes only. We compile publicly available numerical data and display it in a structured format, such as weekly grids, monthly trends, and digit frequency charts.
+                </p>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">1. No Financial Risk or Wagering:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Ank Bazar is an independent data portal. We are not associated with any online betting organizations, lottery operators, or betting exchange platforms. Visitors cannot deposit money, place stakes, or win financial prizes through this website.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">2. Accuracy of Information:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">While our mission is to provide accurate, timely, and well-structured historical and daily data for analytical purposes, we do not guarantee the absolute accuracy, completeness, or reliability of the information published. The numbers and charts presented on this portal are compiled from third-party public sources. Any reliance you place on such information is strictly at your own risk.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">3. No Endorsement of Illegal Activities:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Ank Bazar does not promote, encourage, or endorse illegal gambling. Visitors are solely responsible for ensuring that their use of our analytical data complies with the local, state, and national laws of their respective jurisdictions. We disclaim any liability for how users choose to interpret or utilize the historical data provided on this site.</p>
+                </div>
+            </div>
+
+            <!-- Terms of Service Section -->
+            <div id="terms" class="scroll-mt-32 mb-10">
+                <h2 class="font-headline-md mb-6 border-b pb-2" style="border-color: var(--color-outline-variant);">Section 3: Terms of Service</h2>
+                <p class="td-variant mb-6" style="line-height: 1.6;">By accessing or using Ank Bazar, you agree to comply with and be bound by the following Terms of Service. If you do not agree to these terms, you must exit this website immediately.</p>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">1. Acceptance of Terms:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">These Terms of Service govern your use of Ank Bazar. By navigating our site, viewing our daily number updates, or analyzing our market charts, you acknowledge that you have read, understood, and agreed to these conditions.</p>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">2. Lawful Use of the Website:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">You agree to use Ank Bazar only for lawful purposes. You are strictly prohibited from using the data provided on this site to facilitate, organize, or conduct any illegal activities, including unauthorized gambling or bookmaking. The site is an analytical tool for personal entertainment and educational analysis only.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">3. Intellectual Property:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">All content, layout, design, graphics, and text on this website are the intellectual property of Ank Bazar. © 2026 Ank Bazar. All rights reserved. You may not scrape, copy, reproduce, or distribute our proprietary charts, grids, or data structures for commercial use without prior written consent from our administration.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">4. Third-Party Links:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Our website may contain links to third-party websites or services that are not owned or controlled by Ank Bazar. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">5. Limitation of Liability:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Under no circumstances shall Ank Bazar, its administrators, or its affiliates be held liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of this website. This includes, but is not limited to, financial losses incurred by users who misuse our informational data outside of this platform.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">6. Modifications to the Service:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">We reserve the right to modify, suspend, or discontinue any aspect of the website—including the live market board, historical results, and chart analytics—at any time without prior notice.</p>
+                </div>
+            </div>
+
+            <!-- Privacy Policy Section -->
+            <div id="privacy" class="scroll-mt-32">
+                <h2 class="font-headline-md mb-6 border-b pb-2" style="border-color: var(--color-outline-variant);">Section 4: Privacy Policy</h2>
+                <p class="td-variant mb-6" style="line-height: 1.6;">At Ank Bazar, your privacy is critically important to us. Because we are an informational portal and not an e-commerce or betting platform, we collect very minimal data from our visitors.</p>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">1. Information We Do Not Collect:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Because you cannot place wagers or open financial accounts on Ank Bazar, we never ask for or collect sensitive financial information, credit card numbers, bank details, or government identification.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">2. Information We May Collect:</h3>
+                    <ul class="td-variant ml-6 mb-2" style="list-style-type: disc; line-height: 1.6;">
+                        <li class="mb-2"><strong>Account Data:</strong> If you create an account (e.g., for administrative access or future user-preference features), we may collect basic credentials such as your email address.</li>
+                        <li class="mb-2"><strong>Usage Data:</strong> Like most standard websites, we collect non-personally identifying information that web browsers and servers typically make available, such as the browser type, language preference, referring site, and the date and time of each visitor request. This helps us understand how visitors use our portal and optimize our website for different screen sizes and devices.</li>
+                        <li class="mb-2"><strong>Cookies:</strong> Ank Bazar may use cookies to enhance user experience, remember your preferences (like your preferred chart timeframe), and track website analytics. You can set your browser to refuse all cookies, though some features of the site may not function properly without them.</li>
+                    </ul>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">3. How We Use Your Information:</h3>
+                    <p class="td-variant mb-2" style="line-height: 1.6;">Any information we collect is used solely to:</p>
+                    <ul class="td-variant ml-6" style="list-style-type: disc; line-height: 1.6;">
+                        <li>Maintain and improve the functionality of the website.</li>
+                        <li>Analyze traffic patterns to ensure our servers can handle high-demand periods during daily number updates.</li>
+                        <li>Protect the security and integrity of our platform.</li>
+                    </ul>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">4. Data Security:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">We employ industry-standard security measures, including Supabase authentication protocols, to protect against unauthorized access, alteration, disclosure, or destruction of your personal information. However, please be aware that no method of transmission over the internet is 100% secure.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">5. Sharing of Information:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">We do not sell, trade, or rent user data to third parties. We will only disclose information if required to do so by law or in response to a valid legal request from law enforcement authorities.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">6. Changes to this Privacy Policy:</h3>
+                    <p class="td-variant" style="line-height: 1.6;">Ank Bazar reserves the right to update this Privacy Policy at any time. We encourage users to frequently check this page for any changes. Your continued use of this site after any change in this Privacy Policy will constitute your acceptance of such change.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-table-header mb-2">7. Contact Information:</h3>
+                    <p class="td-variant mb-2" style="line-height: 1.6;">If you have any questions regarding our Legal Disclaimer, Terms of Service, or Privacy Policy, please reach out to us.</p>
+                    <p class="td-variant" style="line-height: 1.6;"><strong>Email Us:</strong> <a href="mailto:contact@ankbazar.in" class="contact-link">contact@ankbazar.in</a></p>
+                    <p class="td-variant" style="line-height: 1.6;"><strong>Follow Us:</strong> <a href="#" class="contact-link">@ankbazar on Instagram</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="flex-col gap-2">
+                <span class="font-headline-md text-primary-bold">Ank Bazar</span>
+                <span class="td-variant mt-1" style="display:block;">© 2026 Ank Bazar. All rights reserved. Information provided is for educational purposes only.</span>
+            </div>
+            <div class="footer-links">
+                <a class="font-label-caps footer-link" href="#disclaimer">Legal Disclaimer</a>
+                <a class="font-label-caps footer-link" href="#privacy">Privacy Policy</a>
+                <a class="font-label-caps footer-link" href="#terms">Terms of Service</a>
+                <a class="font-label-caps footer-link" href="#contact">Contact Us</a>
+                <a class="font-label-caps footer-link" href="#faq">About Portal</a>
+            </div>
+        </div>
+    </footer>
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <button id="modal-close" class="modal-close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            
+            <!-- Step 1: Role Selection -->
+            <div id="step-role-selection" class="modal-step">
+                <h2 class="font-headline-md text-center mb-6">Welcome to Ank Bazar</h2>
+                <div class="role-cards">
+                    <button id="btn-admin-login" class="role-card">
+                        <span class="material-symbols-outlined icon">admin_panel_settings</span>
+                        <span class="font-medium">Admin Login</span>
+                    </button>
+                    <button id="btn-consumer-login" class="role-card">
+                        <span class="material-symbols-outlined icon">person</span>
+                        <span class="font-medium">Consumer Login</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2A: Admin Login -->
+            <div id="step-admin-login" class="modal-step hidden">
+                <button class="btn-back" data-target="step-role-selection">
+                    <span class="material-symbols-outlined">arrow_back</span> Back
+                </button>
+                <h2 class="font-headline-md text-center mb-6">Admin Sign In</h2>
+                <form class="auth-form" id="admin-form">
+                    <div id="admin-error" class="error-message hidden mb-4"></div>
+                    <div class="input-group mb-4">
+                        <label class="font-label-caps">Email Address</label>
+                        <input type="email" id="admin-email" class="input-field" placeholder="admin@ankbazar.in" required>
+                    </div>
+                    <div class="input-group mb-4">
+                        <label class="font-label-caps">Password</label>
+                        <input type="password" id="admin-password" class="input-field" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary w-full mt-4" id="btn-admin-submit">
+                        <span class="btn-text">Log In as Admin</span>
+                        <span class="spinner hidden"></span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 2B: Consumer Login Container -->
+            <div id="step-consumer-login" class="modal-step hidden">
+                <div class="flex items-center mb-4">
+                    <button class="btn-back" data-target="step-role-selection">
+                        <span class="material-symbols-outlined">arrow_back</span> Back
+                    </button>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button id="tab-signin" class="auth-tab active font-table-header">Sign In</button>
+                    <button id="tab-signup" class="auth-tab font-table-header">Sign Up</button>
+                </div>
+
+                <div class="auth-content">
+                    <div id="consumer-error" class="error-message hidden mb-4"></div>
+                    <button id="btn-google-auth" class="btn-social w-full">
+                        <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="G" class="google-icon">
+                        <span id="google-btn-text">Sign in with Google</span>
+                        <span class="spinner hidden" id="google-spinner"></span>
+                    </button>
+
+                    <div class="divider">
+                        <span class="font-label-caps td-muted">OR</span>
+                    </div>
+
+                    <!-- Consumer Email Step -->
+                    <div id="consumer-email-step">
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Email Address</label>
+                            <input type="email" id="consumer-email" class="input-field" placeholder="you@example.com" required>
+                        </div>
+                        <button id="btn-consumer-next" class="btn-primary w-full mt-4">Next</button>
+                    </div>
+
+                    <!-- Consumer Password Step -->
+                    <div id="consumer-password-step" class="hidden">
+                        <div class="read-only-email flex justify-between items-center mb-4">
+                            <span id="display-email" class="font-medium td-variant"></span>
+                            <button id="btn-edit-email" class="btn-text font-label-caps">Edit</button>
+                        </div>
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Password</label>
+                            <input type="password" id="consumer-password" class="input-field" placeholder="••••••••" required>
+                        </div>
+                        <button id="btn-consumer-submit" class="btn-primary w-full mt-4">
+                            <span class="btn-text">Log In</span>
+                            <span class="spinner hidden"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Modal -->
+    <div id="admin-panel-modal" class="modal-overlay hidden">
+        <div class="modal-container" style="max-height: 90vh; overflow-y: auto; max-width: 520px;">
+            <button id="admin-modal-close" class="modal-close-btn">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="modal-step">
+                <h2 class="font-headline-md text-center mb-6">CMS Dashboard</h2>
+                <div id="admin-update-error" class="error-message hidden mb-4"></div>
+                <div id="admin-update-success" class="success-message hidden mb-4" style="background-color: rgba(16, 185, 129, 0.1); color: var(--color-status-positive); padding: 12px; border-radius: var(--radius-default); font-size: 14px; font-weight: 500; text-align: center;">Today's lucky number saved and added to historical results!</div>
+
+                <!-- Accordion Section 1: Lucky Numbers -->
+                <div class="accordion-section">
+                    <button class="accordion-header active" data-accordion="acc-lucky-numbers">
+                        <span>🎯 Today & Previous Day Lucky Numbers</span>
+                        <span class="material-symbols-outlined accordion-arrow">expand_more</span>
+                    </button>
+                    <div id="acc-lucky-numbers" class="accordion-body open">
+                        <div class="accordion-inner">
+                            <div class="accordion-inner-content">
+                        <form id="admin-cms-form" class="auth-form">
+                            <div class="input-group mb-4">
+                                <label class="font-label-caps">Today's Number</label>
+                                <input type="text" id="admin-today-num" class="input-field" required>
+                            </div>
+                            <div class="input-group mb-4">
+                                <label class="font-label-caps">Today's Subtext</label>
+                                <input type="text" id="admin-today-meta" class="input-field" required>
+                            </div>
+                            <div class="divider my-1"></div>
+                            <div class="input-group mb-4">
+                                <label class="font-label-caps">Previous Day Number</label>
+                                <input type="text" id="admin-prev-num" class="input-field" required>
+                            </div>
+                            <div class="input-group mb-4">
+                                <label class="font-label-caps">Previous Day Subtext</label>
+                                <input type="text" id="admin-prev-meta" class="input-field" required>
+                            </div>
+                            <button type="submit" class="btn-primary w-full mt-4" id="btn-admin-save">
+                                <span class="btn-text">Save Changes</span>
+                                <span class="spinner hidden"></span>
+                            </button>
+                        </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Section 2: Yesterday Results -->
+                <div class="accordion-section">
+                    <button class="accordion-header" data-accordion="acc-yesterday">
+                        <span>📊 Yesterday Results Sidebar</span>
+                        <span class="material-symbols-outlined accordion-arrow">expand_more</span>
+                    </button>
+                    <div id="acc-yesterday" class="accordion-body">
+                        <div class="accordion-inner">
+                            <div class="accordion-inner-content">
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Morning Result</label>
+                            <input type="text" id="admin-yesterday-morning" class="input-field" placeholder="e.g. 789-24">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Day Result</label>
+                            <input type="text" id="admin-yesterday-day" class="input-field" placeholder="e.g. 456-11">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Evening Result</label>
+                            <input type="text" id="admin-yesterday-evening" class="input-field" placeholder="e.g. 123-00">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Night Result</label>
+                            <input type="text" id="admin-yesterday-night" class="input-field" placeholder="e.g. 999-88">
+                        </div>
+                        <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-yesterday">
+                            <span class="btn-text">Save Yesterday Results</span>
+                            <span class="spinner hidden"></span>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Section 3: Market Timings -->
+                <div class="accordion-section">
+                    <button class="accordion-header" data-accordion="acc-market">
+                        <span>⏰ Live Market Settings & Timings</span>
+                        <span class="material-symbols-outlined accordion-arrow">expand_more</span>
+                    </button>
+                    <div id="acc-market" class="accordion-body">
+                        <div class="accordion-inner">
+                            <div class="accordion-inner-content">
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Market Name</label>
+                            <input type="text" id="admin-market-name" class="input-field" placeholder="Ank Bazar">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Open Time</label>
+                            <input type="text" id="admin-market-open" class="input-field" placeholder="09:00 AM">
+                        </div>
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Close Time</label>
+                            <input type="text" id="admin-market-close" class="input-field" placeholder="07:00 PM">
+                        </div>
+                        <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-market">
+                            <span class="btn-text">Save Market Settings</span>
+                            <span class="spinner hidden"></span>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Section 4: Historical Results -->
+                <div class="accordion-section">
+                    <button class="accordion-header" data-accordion="acc-history">
+                        <span>📜 Manage Historical Results</span>
+                        <span class="material-symbols-outlined accordion-arrow">expand_more</span>
+                    </button>
+                    <div id="acc-history" class="accordion-body">
+                        <div class="accordion-inner">
+                            <div class="accordion-inner-content">
+                        <!-- Manual Override -->
+                        <div id="admin-history-error" class="error-message hidden mb-4"></div>
+                        <div id="admin-history-success" class="success-message hidden mb-4" style="background-color: rgba(16, 185, 129, 0.1); color: var(--color-status-positive); padding: 12px; border-radius: var(--radius-default); font-size: 14px; font-weight: 500; text-align: center;">History record saved!</div>
+                        <form id="admin-history-form" class="auth-form">
+                            <div class="input-group mb-4">
+                                <label class="font-label-caps">Result Date</label>
+                                <input type="date" id="admin-history-date" class="input-field" required>
+                            </div>
+                            <div class="input-group mb-4">
+                                <label class="font-label-caps">Lucky Number</label>
+                                <input type="text" id="admin-history-number" class="input-field" placeholder="e.g. 348-59" required>
+                            </div>
+                            <button type="submit" class="btn-primary w-full mt-4" id="btn-admin-history-save">
+                                <span class="btn-text">Add / Update History Record</span>
+                                <span class="spinner hidden"></span>
+                            </button>
+                        </form>
+
+                        <div class="divider my-1"></div>
+                        <div id="admin-manage-delete-success" class="success-message hidden mb-4" style="background-color: rgba(16, 185, 129, 0.1); color: var(--color-status-positive); padding: 12px; border-radius: var(--radius-default); font-size: 14px; font-weight: 500; text-align: center;">Record deleted successfully!</div>
+                        <div class="search-bar mb-4">
+                            <div class="input-wrapper">
+                                <span class="material-symbols-outlined icon">calendar_month</span>
+                                <input id="admin-manage-date-filter" class="input-field" type="date"/>
+                            </div>
+                            <button id="btn-admin-manage-search" class="btn-icon">
+                                <span class="material-symbols-outlined">search</span>
+                            </button>
+                            <button id="btn-admin-manage-clear" class="btn-icon hidden">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
+                        <div class="table-container" style="max-height: 300px; overflow-y: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="font-table-header">Date</th>
+                                        <th class="font-table-header">Number</th>
+                                        <th class="font-table-header td-center" style="width: 60px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-manage-history-body">
+                                    <tr>
+                                        <td colspan="3" class="td-center td-muted" style="padding: 24px;">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="btn-admin-manage-load-more" class="btn-text-link hidden">
+                            Load More <span class="material-symbols-outlined icon">expand_more</span>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Section 5: Weekly Grid Overrides -->
+                <div class="accordion-section">
+                    <button class="accordion-header" data-accordion="acc-weekly">
+                        <span>📅 Manage Weekly Grid Overrides</span>
+                        <span class="material-symbols-outlined accordion-arrow">expand_more</span>
+                    </button>
+                    <div id="acc-weekly" class="accordion-body">
+                        <div class="accordion-inner">
+                            <div class="accordion-inner-content">
+                        <p class="td-muted text-xs mb-4">Leave blank to auto-fetch from history.</p>
+                        <div class="input-group mb-4"><label class="font-label-caps">Monday</label><input type="text" id="admin-wg-mon" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Tuesday</label><input type="text" id="admin-wg-tue" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Wednesday</label><input type="text" id="admin-wg-wed" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Thursday</label><input type="text" id="admin-wg-thu" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Friday</label><input type="text" id="admin-wg-fri" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Saturday</label><input type="text" id="admin-wg-sat" class="input-field" placeholder="e.g. 123-45"></div>
+                        <div class="input-group mb-4"><label class="font-label-caps">Sunday</label><input type="text" id="admin-wg-sun" class="input-field" placeholder="e.g. 123-45"></div>
+                        <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-weekly">
+                            <span class="btn-text">Save Weekly Grid</span>
+                            <span class="spinner hidden"></span>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion Section 6: Hot Numbers Settings -->
+                <div class="accordion-section">
+                    <button class="accordion-header" data-accordion="acc-hot">
+                        <span>🔥 Hot Numbers & Chart Settings</span>
+                        <span class="material-symbols-outlined accordion-arrow">expand_more</span>
+                    </button>
+                    <div id="acc-hot" class="accordion-body">
+                        <div class="accordion-inner">
+                            <div class="accordion-inner-content">
+                        <div class="input-group mb-4">
+                            <label class="font-label-caps">Default Calculation Range</label>
+                            <select id="admin-hot-range" class="input-field">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30">Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="font-label-caps">Enable Auto-Calculation</label>
+                            <label class="switch">
+                                <input type="checkbox" id="admin-hot-auto">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="divider my-4"></div>
+                        <h4 class="font-label-caps mb-2 text-primary-bold">Pin Featured Numbers</h4>
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" id="admin-pin-input" class="input-field" placeholder="e.g. 348-59">
+                            <button type="button" class="btn-primary" id="btn-admin-pin-add" style="padding: 0 16px;">Add</button>
+                        </div>
+                        <div id="admin-pinned-list" class="flex-col gap-2 mb-4">
+                            <!-- Pinned items injected here -->
+                        </div>
+
+                        <div class="divider my-4"></div>
+                        <h4 class="font-label-caps mb-2">Auto-Detected Preview</h4>
+                        <div id="admin-hot-preview" class="td-muted text-xs mb-4">
+                            <!-- Preview injected here -->
+                            Loading preview...
+                        </div>
+
+                        <button type="button" class="btn-primary w-full mt-4" id="btn-admin-save-hot">
+                            <span class="btn-text">Save Chart Settings</span>
+                            <span class="spinner hidden"></span>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
