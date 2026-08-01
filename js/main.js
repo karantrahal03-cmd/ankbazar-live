@@ -50,14 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 };
                 
-                updateElement('ui-prev-num', data.previous_number);
-                updateElement('ui-prev-meta', data.previous_lucky_meta);
                 const ist = getISTDate();
                 const todayStr = formatDateISO(ist);
                 
                 // Check if admin has set today's number yet (resets at 12 AM)
                 let actualTodayNum = '-';
                 let actualTodayMeta = '';
+                let displayPrevNum = data.previous_number;
                 
                 try {
                     const { data: todayHist } = await supabase
@@ -67,20 +66,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         .maybeSingle();
                         
                     if (todayHist && todayHist.lucky_number && todayHist.lucky_number !== '-') {
+                        // Admin has updated today's number
                         actualTodayNum = todayHist.lucky_number;
                         actualTodayMeta = data.today_lucky_meta;
+                    } else {
+                        // After 12 AM rollover, admin hasn't updated today's number yet.
+                        // Automatically shift yesterday's number into the previous day slot.
+                        displayPrevNum = data.today_number || data.previous_number;
                     }
                 } catch (e) {
                     console.error('Error fetching today history:', e);
                 }
 
+                updateElement('ui-prev-num', displayPrevNum);
+                updateElement('ui-prev-meta', data.previous_lucky_meta); // Keep previous subtext as requested
                 updateElement('ui-today-num', actualTodayNum);
                 updateElement('ui-today-meta', actualTodayMeta);
 
                 // Live Market Board Time Logic (9 PM to 9 AM)
                 const marketResult = document.getElementById('market-result');
                 if (marketResult) {
-                    const ist = getISTDate();
                     const hours = ist.getHours();
                     const showNumber = hours >= 21 || hours < 9;
                     marketResult.innerText = showNumber ? (data.today_number || '-') : '-';
@@ -113,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (closeHour >= 12 && closeHour < 17) targetCategory = 'day';
                 else if (closeHour >= 17 && closeHour < 20) targetCategory = 'evening';
 
-                updateElement('ui-yesterday-morning', targetCategory === 'morning' ? (data.previous_number || '-') : '-');
-                updateElement('ui-yesterday-day', targetCategory === 'day' ? (data.previous_number || '-') : '-');
-                updateElement('ui-yesterday-evening', targetCategory === 'evening' ? (data.previous_number || '-') : '-');
-                updateElement('ui-yesterday-night', targetCategory === 'night' ? (data.previous_number || '-') : '-');
+                updateElement('ui-yesterday-morning', targetCategory === 'morning' ? (displayPrevNum || '-') : '-');
+                updateElement('ui-yesterday-day', targetCategory === 'day' ? (displayPrevNum || '-') : '-');
+                updateElement('ui-yesterday-evening', targetCategory === 'evening' ? (displayPrevNum || '-') : '-');
+                updateElement('ui-yesterday-night', targetCategory === 'night' ? (displayPrevNum || '-') : '-');
             }
         } catch (error) {
             console.error('Error fetching site content:', error);
