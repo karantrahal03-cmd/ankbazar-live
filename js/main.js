@@ -52,12 +52,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 updateElement('ui-prev-num', data.previous_number);
                 updateElement('ui-prev-meta', data.previous_lucky_meta);
-                updateElement('ui-today-num', data.today_number);
-                updateElement('ui-today-meta', data.today_lucky_meta);
+                const ist = getISTDate();
+                const todayStr = formatDateISO(ist);
+                
+                // Check if admin has set today's number yet (resets at 12 AM)
+                let actualTodayNum = '-';
+                let actualTodayMeta = '';
+                
+                try {
+                    const { data: todayHist } = await supabase
+                        .from('historical_results')
+                        .select('lucky_number')
+                        .eq('result_date', todayStr)
+                        .maybeSingle();
+                        
+                    if (todayHist && todayHist.lucky_number && todayHist.lucky_number !== '-') {
+                        actualTodayNum = todayHist.lucky_number;
+                        actualTodayMeta = data.today_lucky_meta;
+                    }
+                } catch (e) {
+                    console.error('Error fetching today history:', e);
+                }
 
-                // Live Market Board
+                updateElement('ui-today-num', actualTodayNum);
+                updateElement('ui-today-meta', actualTodayMeta);
+
+                // Live Market Board Time Logic (9 PM to 9 AM)
                 const marketResult = document.getElementById('market-result');
-                if (marketResult) marketResult.innerText = data.today_number || '***-**';
+                if (marketResult) {
+                    const ist = getISTDate();
+                    const hours = ist.getHours();
+                    const showNumber = hours >= 21 || hours < 9;
+                    marketResult.innerText = showNumber ? (data.today_number || '-') : '-';
+                }
 
                 const uiMarketName = document.getElementById('ui-market-name');
                 if (uiMarketName && data.market_name) {
@@ -68,11 +95,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 const uiMarketClose = document.getElementById('ui-market-close');
                 if (uiMarketClose && data.market_close_time) uiMarketClose.innerText = data.market_close_time;
 
-                // Yesterday Results Sidebar
-                updateElement('ui-yesterday-morning', data.yesterday_morning);
-                updateElement('ui-yesterday-day', data.yesterday_day);
-                updateElement('ui-yesterday-evening', data.yesterday_evening);
-                updateElement('ui-yesterday-night', data.yesterday_night);
+                // Yesterday Results Sidebar - Auto-Categorized by Close Time
+                let closeHour = 21; // Default 9 PM
+                if (data.market_close_time) {
+                    const match = data.market_close_time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                    if (match) {
+                        let h = parseInt(match[1]);
+                        const isPM = match[3].toUpperCase() === 'PM';
+                        if (isPM && h !== 12) h += 12;
+                        if (!isPM && h === 12) h = 0;
+                        closeHour = h;
+                    }
+                }
+
+                let targetCategory = 'night';
+                if (closeHour >= 6 && closeHour < 12) targetCategory = 'morning';
+                else if (closeHour >= 12 && closeHour < 17) targetCategory = 'day';
+                else if (closeHour >= 17 && closeHour < 20) targetCategory = 'evening';
+
+                updateElement('ui-yesterday-morning', targetCategory === 'morning' ? (data.previous_number || '-') : '-');
+                updateElement('ui-yesterday-day', targetCategory === 'day' ? (data.previous_number || '-') : '-');
+                updateElement('ui-yesterday-evening', targetCategory === 'evening' ? (data.previous_number || '-') : '-');
+                updateElement('ui-yesterday-night', targetCategory === 'night' ? (data.previous_number || '-') : '-');
             }
         } catch (error) {
             console.error('Error fetching site content:', error);
@@ -813,9 +857,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const uiPrevMeta = document.getElementById('ui-prev-meta');
             const uiTodayNum = document.getElementById('ui-today-num');
             const uiTodayMeta = document.getElementById('ui-today-meta');
-            if (adminPrevNum && uiPrevNum) adminPrevNum.value = uiPrevNum.innerText || '';
+            if (adminPrevNum && uiPrevNum) adminPrevNum.value = (uiPrevNum.innerText !== '-' ? uiPrevNum.innerText : '');
             if (adminPrevMeta && uiPrevMeta) adminPrevMeta.value = uiPrevMeta.innerText || '';
-            if (adminTodayNum && uiTodayNum) adminTodayNum.value = uiTodayNum.innerText || '';
+            if (adminTodayNum && uiTodayNum) adminTodayNum.value = (uiTodayNum.innerText !== '-' ? uiTodayNum.innerText : '');
             if (adminTodayMeta && uiTodayMeta) adminTodayMeta.value = uiTodayMeta.innerText || '';
 
             // Populate Yesterday Results from DOM
@@ -899,11 +943,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Auto-archive: ONLY upsert today's number for today
                 const ist = getISTDate();
                 const todayStr = formatDateISO(ist);
+                
+                // Also auto-archive previous day's number for yesterday
+                const yesterday = new Date(ist);
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = formatDateISO(yesterday);
 
                 if (adminTodayNum.value) {
                     await supabase
                         .from('historical_results')
                         .upsert({ result_date: todayStr, lucky_number: adminTodayNum.value }, { onConflict: 'result_date' });
+                }
+                
+                if (adminPrevNum.value) {
+                    await supabase
+                        .from('historical_results')
+                        .upsert(
+                            { result_date: yesterdayStr, lucky_number: adminPrevNum.value },
+                            { onConflict: 'result_date', ignoreDuplicates: true }
+                        );
                 }
                 
                 if(adminUpdateSuccess) adminUpdateSuccess.classList.remove('hidden');

@@ -113,19 +113,28 @@ body {
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
-
-  /* Fixed premium background image */
   background-color: var(--color-background);
+  position: relative;
+}
+
+/* Hardware Accelerated Background with Blur */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20px; /* Expand to hide blur edges */
+  z-index: -2;
   background-image: url('images/light_glass_bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  position: relative;
+  filter: blur(4px);
+  will-change: transform;
+  transform: translateZ(0); /* Force GPU */
+  pointer-events: none;
 }
 
-/* Light overlay + blur on top of bg image */
-body::before {
+/* Gradient Overlay without expensive backdrop-filter */
+body::after {
   content: '';
   position: fixed;
   inset: 0;
@@ -136,8 +145,7 @@ body::before {
     rgba(240, 240, 245, 0.4) 40%,
     rgba(255, 255, 255, 0.3) 100%
   );
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
 }
 
 a {
@@ -265,6 +273,37 @@ button {
     padding: 8px var(--spacing-gutter);
     font-size: 14px;
   }
+}
+
+/* Sliding Top Dashboard Notice */
+.top-dashboard-notice {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.top-dashboard-notice.font-label-caps {
+  font-size: 9px;
+  line-height: 12px;
+}
+@media (min-width: 768px) {
+  .top-dashboard-notice.font-label-caps {
+    font-size: 10px;
+    line-height: 14px;
+  }
+}
+
+.top-dashboard-notice .marquee-content {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
 }
 
 /* ===========================
@@ -429,10 +468,12 @@ button {
   border-radius: var(--radius-xl);
   padding: 16px;
   box-shadow: var(--glass-shadow), var(--glass-highlight);
-  transition: all 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  will-change: transform, box-shadow;
+  transform: translateZ(0); /* Hardware acceleration for hover */
 }
 .card:hover {
-  transform: translateY(-3px);
+  transform: translate3d(0, -3px, 0);
   box-shadow: var(--shadow-lg-hover), var(--glass-highlight);
   border-color: rgba(255, 255, 255, 0.8);
 }
@@ -443,10 +484,11 @@ button {
 .card-shadow {
   box-shadow: var(--glass-shadow-lg), var(--glass-highlight);
   transition: box-shadow 0.3s, transform 0.3s;
+  will-change: transform, box-shadow;
 }
 .card-shadow:hover {
   box-shadow: 0 16px 56px 0 rgba(31, 38, 135, 0.15), var(--glass-highlight);
-  transform: translateY(-3px);
+  transform: translate3d(0, -3px, 0);
 }
 
 .card-title {
@@ -550,10 +592,12 @@ button {
   flex-grow: 1;
   height: 100%;
   box-shadow: var(--glass-shadow), var(--glass-highlight);
-  transition: all 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
 }
 .card-secondary:hover {
-  transform: translateY(-3px);
+  transform: translate3d(0, -3px, 0);
   box-shadow: var(--shadow-lg-hover), var(--glass-highlight);
   border-color: rgba(255, 255, 255, 0.8);
 }
